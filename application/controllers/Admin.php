@@ -35,4 +35,11 @@ class Admin extends CI_Controller {
 		$data['content'] = $this->load->view('pages/data_user','',true);
 		$this->load->view('default',$data);
 	}
+
+	public function laporan()
+	{
+		echo "laporan";
+		// $data['content'] = $this->load->view('pages/data_user','',true);
+		// $this->load->view('default',$data);
+	}
 }
