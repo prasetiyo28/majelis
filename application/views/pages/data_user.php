@@ -17,30 +17,22 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<th scope="row">1</th>
-							<td>Fatkhull Falah</td>
-							<td>Jatibarang</td>
-							<td>JQH Al-Mizan</td>
-							<td>Laki-laki</td>
-							<td>
-								<a class="btn btn-info" href="">Detail</a>
-								<!-- <a class="btn btn-info" href="">Edit</a> -->
-								<a class="btn btn-danger" href="">Block</a>
-							</td>
-						</tr>
-						<tr>
-							<th scope="row">2</th>
-							<td>Aldin Tri Mulyo</td>
-							<td>Kalinyamat Kulon</td>
-							<td>JQH Al-Mizan</td>
-							<td>Laki-laki</td>
-							<td>
-								<a class="btn btn-info" href="">Detail</a>
-								<!-- <a class="btn btn-info" href="">Edit</a> -->
-								<a class="btn btn-danger" href="">Block</a>
-							</td>
-						</tr>
+						<?php $no=1; foreach ($users as $u ) { ?>
+							<tr>
+								<th scope="row"><?php echo $no++; ?></th>
+								<td><?php echo $u->nama; ?></td>
+								<td><?php echo $u->alamat; ?></td>
+								<td><?php echo $u->nama_majelis; ?></td>
+								<td><?php echo $u->jenis_kelamin; ?></td>
+								
+								<td>
+									<a class="btn btn-info" href="">Detail</a>
+									<!-- <a class="btn btn-info" href="">Edit</a> -->
+									<a class="btn btn-danger" href="">Block</a>
+								</td>
+							</tr>
+
+						<?php } ?>
 
 
 					</tbody>

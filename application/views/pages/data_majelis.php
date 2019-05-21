@@ -17,52 +17,108 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<th scope="row">1</th>
-							<td>JQH AL Mizan</td>
-							<td>Wusthol Bahri</td>
-							<td>jalan mataram no.9 kelurahan pesurungan lor</td>
-							<td>085643288818</td>
-							<td>Nadhatul Ulama</td>
-							<td>
-								<a class="btn btn-info" href="">Detail</a>
-								<!-- <a class="btn btn-info" href="">Edit</a> -->
-								<a class="btn btn-danger" href="">Block</a>
-							</td>
-						</tr>
-						<tr>
-							<th scope="row">2</th>
-							<td>JQH AL Mizan</td>
-							<td>Wusthol Bahri</td>
-							<td>jalan mataram no.9 kelurahan pesurungan lor</td>
-							<td>085643288818</td>
-							<td>Nadhatul Ulama</td>
-							<td>
-								<a class="btn btn-info" href="">Detail</a>
-								<!-- <a class="btn btn-info" href="">Edit</a> -->
-								<a class="btn btn-danger" href="">Block</a>
-							</td>
-						</tr>
-						<tr>
-							<th scope="row">3</th>
-							<td>JQH AL Mizan</td>
-							<td>Wusthol Bahri</td>
-							<td>jalan mataram no.9 kelurahan pesurungan lor</td>
-							<td>085643288818</td>
-							<td>Nadhatul Ulama</td>
-							<td>
-								<a class="btn btn-info" href="">Detail</a>
-								<!-- <a class="btn btn-info" href="">Edit</a> -->
-								<a class="btn btn-danger" href="">Block</a>
-							</td>
-						</tr>
+
+						<?php $no=1;  foreach ($majelis as $m) {  ?>
+							<tr>
+								<th scope="row"><?php echo $no++; ?></th>
+								<td><?php echo $m->nama_majelis; ?></td>
+								<td><?php echo $m->ketua; ?></td>
+								<td><?php echo $m->alamat; ?></td>
+								<td><?php echo $m->kontak; ?></td>
+								<td><?php echo $m->kategori; ?></td>
+								<td>
+									<a class="btn btn-info" href="">Detail</a>
+									<!-- <a class="btn btn-info" href="">Edit</a> -->
+									<a class="btn btn-danger" href="">Block</a>
+								</td>
+							</tr>
+						<?php } ?>
+
 
 					</tbody>
 					<tfoot>
-						<a class="btn btn-success" href="">Tambah Baru</a>
+						<button type="button" class="btn btn-success" href="#" data-toggle="modal" data-target="#exampleModal">Buat Baru</button>
 					</tfoot>
 				</table>
 			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Tambah Majelis</h5>
+				<a href="#" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</a>
+			</div>
+			<div class="modal-body">
+				<form action='<?php echo base_url() ?>Admin/save_majelis' method="POST" enctype="multipart/form-data">
+
+					<div class="form-group">
+						<label for="inputText3" class="col-form-label">Nama Majelis</label>
+						<input required="required" id="inputText3" name="nama" type="text" class="form-control" placeholder="Nama Majelis...">
+
+					</div>
+
+					<div class="form-group">
+						<label for="inputText3" class="col-form-label">Ketua Majelis</label>
+						<input required="required" id="inputText3" name="ketua" type="text" class="form-control" placeholder="Ketua Majelis...">
+
+					</div>
+
+
+					<div class="form-group">
+						<label for="inputText3" class="col-form-label">Kontak Majelis</label>
+						<input required="required" id="inputText3" name="kontak" type="text" class="form-control" placeholder="Kontak Majelis...">
+
+					</div>
+
+					<div class="form-group">
+						<label for="inputText3" class="col-form-label">Alamat Majelis</label>
+						<textarea name="alamat" class="form-control" placeholder="Alamat Majelis..."></textarea>
+					</div>
+
+
+					<div class="form-group">
+						<label for="inputText3" class="col-form-label">Kategori</label>
+						<select required="required" class="form-control" name="kategori">
+							<option value="" selected disabled>-Pilih Kategori-</option>
+							<?php foreach ($kategori as $k) { ?>
+								<option value="<?php echo $k->id_kategori ?>"><?php echo $k->kategori; ?></option>
+							<?php } ?>
+						</select>
+					</div>
+
+
+
+					<div class="form-group">
+						<label for="inputText3" class="col-form-label">Logo Majelis</label>
+						<p>*file yang diterima hanya berekstensi .jpg, .jpeg, .png</p>
+						<input required="required" type="file" accept="image/jpg, image/jpeg, image/png" name="foto">
+					</div>
+
+					<script type="text/javascript">
+						$(document).ready(function() {
+							$('#summernote').summernote();
+							$('#summernote2').summernote();
+						});
+					</script>
+
+
+
+
+				</div>
+				<div class="modal-footer">
+					<a href="#" class="btn btn-secondary" data-dismiss="modal">Batal</a>
+					<input type="submit" value="Simpan" class="btn btn-success">
+				</div>
+
+
+			</form>
 		</div>
 	</div>
 </div>
