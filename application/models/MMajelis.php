@@ -5,6 +5,7 @@ class MMajelis extends CI_Model{
 
 	function tambah_data($table,$data){
 		$this->db->insert($table,$data);
+		return "success";
 	}
 
 	function cek_login($data){
@@ -12,6 +13,20 @@ class MMajelis extends CI_Model{
 		$query = $this->db->get('admin');
 		
 		return $query->row();
+	}
+
+	function cek_login_users($data){
+		$this->db->where($data);
+		$query = $this->db->get('users');
+		
+		return $query->row();
+	}
+
+	function cek_email($data){
+		$this->db->where($data);
+		$query = $this->db->get('users');
+		
+		return $query->num_rows();
 	}
 
 	function get_kategori(){
