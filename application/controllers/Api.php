@@ -12,20 +12,103 @@ class Api extends REST_Controller {
 
 	public function index_get(){
 // testing response
-		$response['status']=200;
-		$response['error']=false;
-		$response['message']='Hai from response';
-// tampilkan response
-		$this->response($response);
-	}
-	public function majelis_get()
-	{
+
 		$response['status']=true;
 		$response['error']=false;
 		$response['message']='all majelis found';
 		$response['data'] =$this->MMajelis->get_majelis_all();
+// tampilkan response
+		$this->response($response);
+	}
+	public function majelis_get($id='')
+	{
+
+
+		if ($id == '') {
+			$response['status']=true;
+			$response['error']=false;
+			$response['message']='all majelis found';
+			$response['data'] =$this->MMajelis->get_majelis_all();	
+			
+		}else if ($id=='nu'){
+			$response['status']=true;
+			$response['error']=false;
+			$response['message']='all majelis found';
+			$response['data'] =$this->MMajelis->get_majelis_by_kategori('1');	
+		}else if ($id=='mu'){
+			$response['status']=true;
+			$response['error']=false;
+			$response['message']='all majelis found';
+			$response['data'] =$this->MMajelis->get_majelis_by_kategori('2');	
+		}
+		else{
+
+
+			$response['status']=true;
+			$response['error']=false;
+			$response['message']='all majelis found';
+			$response['data'] =$this->MMajelis->get_majelis_by_id($id);	
+
+		}
 		// $data2['kategori'] =$this->MMajelis->get_kategori();
+
+		$this->response($response);
+	}
+
+	public function nu_get($id=''){
+		if ($id==''){
+			$response['status']=true;
+			$response['error']=false;
+			$response['message']='all majelis found';
+			$response['data'] =$this->MMajelis->get_majelis_by_kategori('1');	
+		}else{
+			$response['status']=true;
+			$response['error']=false;
+			$response['message']='all majelis found';
+			$response['data'] =$this->MMajelis->get_majelis_by_id($id);
+
+		}
+
+
+		$this->response($response);
+	}
+
+	public function mu_get($id=''){
+		if ($id==''){
+			$response['status']=true;
+			$response['error']=false;
+			$response['message']='all majelis found';
+			$response['data'] =$this->MMajelis->get_majelis_by_kategori('2');	
+		}else{
+			$response['status']=true;
+			$response['error']=false;
+			$response['message']='all majelis found';
+			$response['data'] =$this->MMajelis->get_majelis_by_id($id);
+
+		}
 		
+		$this->response($response);
+	}
+
+	public function kategori_get($id='')
+	{
+
+
+		if ($id == '') {
+			$response['status']=true;
+			$response['error']=false;
+			$response['message']='all majelis found';
+			$response['data'] =$this->MMajelis->get_majelis_all();	
+
+		}else{
+			$response['status']=true;
+			$response['error']=false;
+			$response['message']='all majelis found';
+			$response['data'] =$this->MMajelis->get_majelis_by_kategori($id);	
+
+		}
+		// $data2['kategori'] =$this->MMajelis->get_kategori();
+
 		$this->response($response);
 	}
 
@@ -80,7 +163,7 @@ class Api extends REST_Controller {
 			$response['status']=false;			
 			$response['error']=true;
 			$response['message']='users not found 404 :(';			
-			
+
 
 		}
 

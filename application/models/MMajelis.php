@@ -43,6 +43,24 @@ class MMajelis extends CI_Model{
 		return $query->result();
 	}
 
+	function get_majelis_by_id($id){
+		$this->db->select('majelis.*, kategori.kategori');
+		$this->db->from('majelis');
+		$this->db->join('kategori','majelis.id_kategori = kategori.id_kategori');
+		$this->db->where('majelis.id_majelis',$id);
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	function get_majelis_by_kategori($id){
+		$this->db->select('majelis.*, kategori.kategori');
+		$this->db->from('majelis');
+		$this->db->join('kategori','majelis.id_kategori = kategori.id_kategori');
+		$this->db->where('majelis.id_kategori',$id);
+		$query = $this->db->get();
+		return $query->result();
+	}
+
 	function get_users_all(){
 		$this->db->select('users.*, majelis.nama_majelis as nama_majelis');
 		$this->db->from('users');
