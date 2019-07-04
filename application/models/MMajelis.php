@@ -107,9 +107,33 @@ class MMajelis extends CI_Model{
 		$this->db->update($table);
 	}
 
+	function update_data($table,$data,$id,$param){
+		$this->db->set($data);
+		$this->db->where($param,$id);
+		$this->db->update($table);
+	}
+
 	function verifikasi($table,$id,$param){
 		$this->db->set('verif','1');
 		$this->db->where($param,$id);
 		$this->db->update($table);
+	}
+
+	function block_majelis($id){
+		$this->db->set('block','1');
+		$this->db->where('id_majelis',$id);
+		$this->db->update('majelis');
+	}
+
+	function unblock_majelis($id){
+		$this->db->set('block','0');
+		$this->db->where('id_majelis',$id);
+		$this->db->update('majelis');
+	}
+
+	function hapus_majelis($id){
+		$this->db->set('deleted','1');
+		$this->db->where('id_majelis',$id);
+		$this->db->update('majelis');
 	}
 }

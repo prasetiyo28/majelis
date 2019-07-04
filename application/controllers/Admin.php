@@ -71,6 +71,79 @@ class Admin extends CI_Controller {
 
 	}
 
+	public function update_majelis(){
+
+		$data['nama_majelis'] = $_POST['nama'];
+		$data['ketua'] = $_POST['ketua'];
+		$id_majelis = $_POST['id_majelis'];
+		$data['kontak'] = $_POST['kontak'];
+		$data['alamat'] = $_POST['alamat'];
+		$tabel = 'majelis';
+		$param='id_majelis';
+		$this->MMajelis->update_data($tabel,$data,$id_majelis,$param);
+		$this->session->set_flashdata('alert','berhasil');
+		redirect($_SERVER['HTTP_REFERER']);
+		// echo json_encode($data);
+
+
+	}
+
+	public function block_majelis($id){
+		$this->MMajelis->block_majelis($id);
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function unblock($id){
+		$this->MMajelis->unblock_majelis($id);
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function hapus_majelis($id){
+		$this->MMajelis->hapus_majelis($id);
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function detail(){
+		$id = $_POST['id_majelis'];
+		// $id = 1;
+		// $table = 'ruang';
+		$data = $this->MMajelis->get_majelis_by_id($id);
+
+
+		echo '
+		<table class="table table-striped">
+		<tr>
+		<td colspan="3"><img style="text-align: center;" class="img-thumbnail" src="'. base_url().'foto_ruang/'. $data->nama.'"></td>
+		</tr>
+		<tr>
+		<td>Nama Ruangan</td>
+		<td>:</td>
+		<td>'.$data->nama_ruangan.'</td>
+		</tr>
+		<td>Nama Mitra</td>
+		<td>:</td>
+		<td>'.$data->nama_mitra.'</td>
+		</tr>
+		<tr>
+		<td>Kapasitas</td>
+		<td>:</td>
+		<td>'.$data->keterangan.'</td>
+		</tr>
+		<tr>
+		<td>Harga</td>
+		<td>:</td>
+		<td>Rp.'.$data->harga.'/Jam</td>
+		</tr>
+		<tr>
+		<td>Keterangan</td>
+		<td>:</td>
+		<td>'.$ket.'</td>
+		</tr>
+		</table>';
+
+
+	}
+
 	public function user()
 	{
 		$data2['users'] =$this->MMajelis->get_users_all();

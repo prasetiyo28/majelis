@@ -14,7 +14,7 @@
 	<link href="<?php echo base_url() ?>assets/css/font-awesome.css" rel="stylesheet"> 
 	<!-- //font-awesome icons -->
 	<!-- js-->
-	<script src="<?php echo base_url() ?>assets/js/jquery-1.11.1.min.js"></script>
+	<script src="<?php echo base_url() ?>assets/js/jquery.min.js"></script>
 	<script src="<?php echo base_url() ?>assets/js/modernizr.custom.js"></script>
 	<!--webfonts-->
 	<link href='//fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>

@@ -27,9 +27,25 @@
 								<td><?php echo $m->kontak; ?></td>
 								<td><?php echo $m->kategori; ?></td>
 								<td>
-									<a class="btn btn-info" href="">Detail</a>
+									<a class="btn btn-info" 
+									href="javascript:;"
+									data-id="<?php echo $m->id_majelis; ?>" 
+									data-nama="<?php echo $m->nama_majelis; ?>" 
+									data-ketua="<?php echo $m->ketua; ?>"
+									data-alamat="<?php echo $m->alamat; ?>"
+									data-kontak="<?php echo $m->kontak; ?>"
+									data-kategori="<?php echo $m->kategori; ?>"
+									data-toggle="modal" data-target="#edit-data">Edit Data</a>
 									<!-- <a class="btn btn-info" href="">Edit</a> -->
-									<a class="btn btn-danger" href="">Block</a>
+									<a class="btn btn-danger" href="<?php echo base_url() ?>admin/hapus_majelis/<?php echo $m->id_majelis ?>">Deleted</a>
+									<br>
+
+									<?php if ($m->block == 1) { ?>
+										<a href="<?php echo base_url() ?>admin/unblock/<?php echo $m->id_majelis ?>">Majelis telah diblock</a>
+									<?php }else{ ?>
+										<a class="btn btn-default" href="<?php echo base_url() ?>admin/block_majelis/<?php echo $m->id_majelis ?>">Block</a>
+									<?php } ?>
+									
 								</td>
 							</tr>
 						<?php } ?>
@@ -122,3 +138,82 @@
 		</div>
 	</div>
 </div>
+
+<!-- Modal Ubah -->
+<div class="modal fade" id="edit-data" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">ubah</h5>
+				<a href="#" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</a>
+			</div>
+			<div class="modal-body">
+				<form action='<?php echo base_url() ?>Admin/update_majelis' method="POST" enctype="multipart/form-data">
+
+					<div class="form-group">
+						<label for="inputText3" class="col-form-label">Nama Majelis</label>
+						<input type="hidden" name="id_majelis" id="id">
+						<input required="required" id="nama" id="inputText3" name="nama" type="text" class="form-control" placeholder="Nama Majelis...">
+
+					</div>
+
+					<div class="form-group">
+						<label for="inputText3" class="col-form-label">Ketua Majelis</label>
+						<input required="required" id="ketua" id="inputText3" name="ketua" type="text" class="form-control" placeholder="Ketua Majelis...">
+
+					</div>
+
+
+					<div class="form-group">
+						<label for="inputText3" class="col-form-label">Kontak Majelis</label>
+						<input required="required" name="kontak" type="text" class="form-control" id="kontak" placeholder="Kontak Majelis...">
+
+					</div>
+
+					<div class="form-group">
+						<label for="inputText3" class="col-form-label">Alamat Majelis</label>
+						<input type="text" id="alamat" name="alamat"  class="form-control" placeholder="Alamat Majelis...">
+					</div>
+
+
+
+
+
+
+
+
+				</div>
+				<div class="modal-footer">
+					<a href="#" class="btn btn-secondary" data-dismiss="modal">Batal</a>
+					<input type="submit" value="Ubah" class="btn btn-success">
+				</div>
+
+
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function() {
+        // Untuk sunting
+
+        
+
+        $('#edit-data').on('show.bs.modal', function (event) {
+            var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan
+            var modal          = $(this)
+
+            // Isi nilai pada field
+            modal.find('#id').attr("value",div.data('id'));
+            modal.find('#nama').attr("value",div.data('nama'));
+            modal.find('#ketua').attr("value",div.data('ketua'));
+            modal.find('#alamat').attr("value",div.data('alamat'));
+            modal.find('#kontak').attr("value",div.data('kontak'));
+
+            
+        });
+    });
+</script>
