@@ -57,6 +57,7 @@ class MMajelis extends CI_Model{
 		$this->db->from('majelis');
 		$this->db->join('kategori','majelis.id_kategori = kategori.id_kategori');
 		$this->db->where('majelis.id_kategori',$id);
+		$this->db->where('majelis.deleted','0');
 		$query = $this->db->get();
 		return $query->result();
 	}
