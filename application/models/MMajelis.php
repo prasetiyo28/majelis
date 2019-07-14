@@ -15,6 +15,30 @@ class MMajelis extends CI_Model{
 		return $query->row();
 	}
 
+
+	function cek_majelis($data){
+		$this->db->where($data);
+		$query = $this->db->get('users_majelis');
+		
+		return $query->row();
+	}
+
+	function get_register(){
+		// $this->db->where($data);
+		$this->db->limit(1);
+		$this->db->order_by('id_user','desc');
+		$query = $this->db->get('users');
+		
+		return $query->row();
+	}
+
+	function get_id_majelis(){
+		$this->db->order_by('id_majelis','DESC');
+		$query = $this->db->get('users_majelis');
+		
+		return $query->row();
+	}
+
 	function cek_login_users($data){
 		$this->db->where($data);
 		$query = $this->db->get('users');
@@ -31,6 +55,11 @@ class MMajelis extends CI_Model{
 
 	function get_kategori(){
 		$query = $this->db->get('kategori');
+		return $query->result();
+	}
+	function get_kegiatan_by_majelis($id){
+		$this->db->where('id_majelis',$id);
+		$query = $this->db->get('kegiatan');
 		return $query->result();
 	}
 
@@ -52,6 +81,15 @@ class MMajelis extends CI_Model{
 		return $query->result();
 	}
 
+	function get_majelis_by_user($id){
+		$this->db->select('majelis.*, kategori.kategori');
+		$this->db->from('majelis');
+		$this->db->join('kategori','majelis.id_kategori = kategori.id_kategori');
+		$this->db->where('majelis.id_majelis',$id);
+		$query = $this->db->get();
+		return $query->row();
+	}
+
 	function get_majelis_by_kategori($id){
 		$this->db->select('majelis.*, kategori.kategori');
 		$this->db->from('majelis');
@@ -60,6 +98,15 @@ class MMajelis extends CI_Model{
 		$this->db->where('majelis.deleted','0');
 		$query = $this->db->get();
 		return $query->result();
+	}
+
+	function get_majelis_user()
+	{	
+		$id = $this->session->userdata('user_id');
+		$this->db->where('users_majelis.id_users',$id);
+		$this->db->join('majelis','users_majelis.id_majelis = majelis.id_majelis');
+		$query = $this->db->get('users_mjelis');
+		return $query->row();
 	}
 
 	function get_users_all(){
@@ -100,7 +147,7 @@ class MMajelis extends CI_Model{
 
 
 
-	
+
 
 	function hapus($table,$id,$param){
 		$this->db->set('deleted','1');

@@ -5,6 +5,7 @@ class Admin extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
+		$this->load->library(array('googlemaps'));
 		$this->load->model('MMajelis');
 
 	}
@@ -23,6 +24,22 @@ class Admin extends CI_Controller {
 	{
 		$data2['majelis'] =$this->MMajelis->get_majelis_all();
 		$data2['kategori'] =$this->MMajelis->get_kategori();
+
+		$config['map_div_id'] = "map-add";
+		$config['map_height'] = "250px";
+		$config['center'] = '-6.880029,109.124192';
+		$config['zoom'] = '12';
+		$config['map_height'] = '300px;';
+		$this->googlemaps->initialize($config);
+
+		$marker = array();
+		$marker['position'] = '-6.880029,109.124192';
+		$marker['draggable'] = true;
+		$marker['ondragend'] = 'setMapToForm(event.latLng.lat(), event.latLng.lng());';
+		$this->googlemaps->add_marker($marker);
+		$data['map'] = $this->googlemaps->create_map();
+		$data2['map'] = $this->googlemaps->create_map();
+
 		$data['content'] = $this->load->view('pages/data_majelis',$data2,true);
 		$this->load->view('default',$data);
 	}
@@ -41,6 +58,9 @@ class Admin extends CI_Controller {
 		$data['id_kategori'] = $_POST['kategori'];
 		$data['kontak'] = $_POST['kontak'];
 		$data['alamat'] = $_POST['alamat'];
+		$data['longitude'] = $_POST['longitude'];
+		$data['latitude'] = $_POST['latitude'];
+		
 		$data['logo']=$nama_upload;
 
 		$config['upload_path']          = './foto_majelis/';
@@ -63,7 +83,14 @@ class Admin extends CI_Controller {
 			$tabel = 'majelis';
 			$this->MMajelis->tambah_data($tabel,$data);
 			$this->session->set_flashdata('alert','berhasil');
-			redirect($_SERVER['HTTP_REFERER']);
+
+
+			$users['email'] = $_POST['email'];
+			$users['password'] = md5('majelis12345');
+			$users['id_majelis'] = $this->MMajelis->get_id_majelis()->id_majelis;
+			$this->MMajelis->tambah_data('users_majelis',$users);
+
+			// redirect($_SERVER['HTTP_REFERER']);
 
 		}
 

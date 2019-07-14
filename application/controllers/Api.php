@@ -10,6 +10,8 @@ class Api extends REST_Controller {
 
 	}
 
+
+
 	public function index_get(){
 // testing response
 
@@ -19,6 +21,17 @@ class Api extends REST_Controller {
 		$response['data'] =$this->MMajelis->get_majelis_all();
 // tampilkan response
 		$this->response($response);
+	}
+
+	public function token_get()
+	{
+		$token = openssl_random_pseudo_bytes(40);
+
+//Convert the binary data into hexadecimal representation.
+		$token = bin2hex($token);
+
+//Print it out for example purposes.
+		echo $token;
 	}
 	public function majelis_get($id='')
 	{
@@ -57,15 +70,27 @@ class Api extends REST_Controller {
 
 	public function nu_get($id=''){
 		if ($id==''){
+
+			$data = $this->MMajelis->get_majelis_by_kategori('1');
+
+			foreach ($data as $d) {
+				$d->id_majelis = (int)$d->id_majelis;
+				// echo $d->id_majelis;
+			}
 			$response['status']=true;
 			$response['error']=false;
 			$response['message']='all majelis found';
-			$response['data'] =$this->MMajelis->get_majelis_by_kategori('1');	
+			$response['data'] =$data;	
 		}else{
+			$data = $this->MMajelis->get_majelis_by_id($id);
+			foreach ($data as $d) {
+				$d->id_majelis = (int)$d->id_majelis;
+				// echo $d->id_majelis;
+			}
 			$response['status']=true;
 			$response['error']=false;
 			$response['message']='all majelis found';
-			$response['data'] =$this->MMajelis->get_majelis_by_id($id);
+			$response['data'] =$data;
 
 		}
 
@@ -75,19 +100,32 @@ class Api extends REST_Controller {
 
 	public function mu_get($id=''){
 		if ($id==''){
+			$data = $this->MMajelis->get_majelis_by_kategori('2');
+
+			foreach ($data as $d) {
+				$d->id_majelis = (int)$d->id_majelis;
+				// echo $d->id_majelis;
+			}
 			$response['status']=true;
 			$response['error']=false;
 			$response['message']='all majelis found';
-			$response['data'] =$this->MMajelis->get_majelis_by_kategori('2');	
+			$response['data'] = $data;	
+
 		}else{
+			$data = $this->MMajelis->get_majelis_by_id($id);
+			foreach ($data as $d) {
+				$d->id_majelis = (int)$d->id_majelis;
+				// echo $d->id_majelis;
+			}
 			$response['status']=true;
 			$response['error']=false;
 			$response['message']='all majelis found';
-			$response['data'] =$this->MMajelis->get_majelis_by_id($id);
+			$response['data'] =$data;
 
 		}
 		
-		$this->response($response);
+		$this->response($data);
+
 	}
 
 	public function kategori_get($id='')
@@ -95,6 +133,13 @@ class Api extends REST_Controller {
 
 
 		if ($id == '') {
+
+			$data = $this->MMajelis->get_majelis_by_kategori('2');
+
+			foreach ($data as $d) {
+				$d->id_majelis = (int)$d->id_majelis;
+				// echo $d->id_majelis;
+			}
 			$response['status']=true;
 			$response['error']=false;
 			$response['message']='all majelis found';
@@ -113,10 +158,18 @@ class Api extends REST_Controller {
 	}
 
 	public function register_post(){
+		$token = openssl_random_pseudo_bytes(40);
+
+//Convert the binary data into hexadecimal representation.
+		$token = bin2hex($token);
+
+//Print it out for example purposes.
+
 		$data['nama'] = $_POST['nama'];
-		$data['jenis_kelamin'] = $_POST['jenis_kelamin'];
+		// $data['jenis_kelamin'] = $_POST['jenis_kelamin'];
 		$data['email'] = $_POST['email'];
 		$data['password'] = md5($_POST['password']);
+		$data['token'] = $token;
 		$data['verif'] = '1';
 
 		$data2['email'] = $_POST['email'];
@@ -129,6 +182,7 @@ class Api extends REST_Controller {
 			if ($register) {
 				$response['status']=true;
 				$response['error']=false;
+				$response['data']=$this->MMajelis->get_register();
 				$response['message']='register sucessfully';
 
 

@@ -30,13 +30,11 @@ class Login extends CI_Controller {
 			}else{
 				$datauser = array(
 					'user_id' => $cek_majelis->id_users,
-					'majelis_id' => $cek_majelis->id_majelis,
-					'email' => $cek_majelis->email
+					'majelis_id' => $cek_majelis->majelis_id,
+					'email' => $cek_majelis->email,
 				);
-				$this->session->set_userdata($datauser);
+				
 				redirect('majelis');
-
-				// echo json_encode($datauser);
 			}
 
 		}else{

@@ -40,7 +40,5 @@
 	<script src="<?php echo base_url() ?>assets/js/metisMenu.min.js"></script>
 	<script src="<?php echo base_url() ?>assets/js/custom.js"></script>
 	<link href="<?php echo base_url() ?>assets/css/custom.css" rel="stylesheet">
-
-	<?php if(isset($map['js'])) echo $map['js']; ?>
 	<!--//Metis Menu -->
 </head> 

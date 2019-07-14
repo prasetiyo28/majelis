@@ -4,58 +4,38 @@
 			<h3 class="title1">Data Majelis</h3>
 			<div class="panel-body widget-shadow">
 				<h4>Basic Table:</h4>
-				<table class="table">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th>Nama Majelis</th>
-							<th>Ketua</th>
-							<th>Alamat</th>
-							<th>Kontak</th>
-							<th>Kategori</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody>
-
-						<?php $no=1;  foreach ($majelis as $m) {  ?>
-							<tr>
-								<th scope="row"><?php echo $no++; ?></th>
-								<td><?php echo $m->nama_majelis; ?></td>
-								<td><?php echo $m->ketua; ?></td>
-								<td><?php echo $m->alamat; ?></td>
-								<td><?php echo $m->kontak; ?></td>
-								<td><?php echo $m->kategori; ?></td>
-								<td>
-									<a class="btn btn-info" 
-									href="javascript:;"
-									data-id="<?php echo $m->id_majelis; ?>" 
-									data-nama="<?php echo $m->nama_majelis; ?>" 
-									data-ketua="<?php echo $m->ketua; ?>"
-									data-alamat="<?php echo $m->alamat; ?>"
-									data-kontak="<?php echo $m->kontak; ?>"
-									data-kategori="<?php echo $m->kategori; ?>"
-									data-toggle="modal" data-target="#edit-data">Edit Data</a>
-									<!-- <a class="btn btn-info" href="">Edit</a> -->
-									<a class="btn btn-danger" href="<?php echo base_url() ?>admin/hapus_majelis/<?php echo $m->id_majelis ?>">Deleted</a>
-									<br>
-
-									<?php if ($m->block == 1) { ?>
-										<a href="<?php echo base_url() ?>admin/unblock/<?php echo $m->id_majelis ?>">Majelis telah diblock</a>
-									<?php }else{ ?>
-										<a class="btn btn-default" href="<?php echo base_url() ?>admin/block_majelis/<?php echo $m->id_majelis ?>">Block</a>
-									<?php } ?>
-									
-								</td>
-							</tr>
-						<?php } ?>
+				<table class="table table-striped">
+					<tr>
+						<td>Nama Majelis</td>
+						<td>:</td>
+						<td><input type="text" class="form-control" readonly name="nama" value="<?php echo $majelis->nama_majelis ?>"></td>
+					</tr>
+					<tr>
+						<td>Nama Ketua</td>
+						<td>:</td>
+						<td><input class="form-control" type="text" readonly name="nama" value="<?php echo $majelis->ketua ?>"></td>
+					</tr>
+					<tr>
+						<td>Alamat</td>
+						<td>:</td>
+						<td><input class="form-control" type="text" readonly name="nama" value="<?php echo $majelis->alamat ?>"></td>
+					</tr>
+					<tr>
+						<td>Kontak</td>
+						<td>:</td>
+						<td><input class="form-control" type="text" readonly name="nama" value="<?php echo $majelis->kontak ?>"></td>
+					</tr>
 
 
-					</tbody>
-					<tfoot>
-						<button type="button" class="btn btn-success" href="#" data-toggle="modal" data-target="#exampleModal">Buat Baru</button>
-					</tfoot>
 				</table>
+				<a class="btn btn-info" 
+				href="javascript:;"
+				data-nama="<?php echo $majelis->nama_majelis; ?>" 
+				data-ketua="<?php echo $majelis->ketua; ?>"
+				data-alamat="<?php echo $majelis->alamat; ?>"
+				data-kontak="<?php echo $majelis->kontak; ?>"
+				data-toggle="modal" data-target="#edit-data">Edit Data</a>
+
 			</div>
 		</div>
 	</div>
@@ -92,33 +72,6 @@
 						<input required="required" id="inputText3" name="kontak" type="text" class="form-control" placeholder="Kontak Majelis...">
 
 					</div>
-					<div class="form-group">
-						<label for="inputText3" class="col-form-label">Email Majelis</label>
-						<input required="required" id="inputText3" name="email" type="email" class="form-control" placeholder="Email Majelis...">
-
-					</div>
-
-					<div class="form-group">
-						<label class="col-form-label">Koordinat</label><br>
-						<div class="col-sm-4">
-							<div class="input-group">
-								<input id="input-calendar" type="text" name="latitude" class="form-control"  placeholder="latitude">
-								<span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-							</div>
-							
-						</div>
-						<div class="col-sm-4">
-							<div class="input-group">
-								<input id="input-calendar" type="text" name="longitude" class="form-control" placeholder="longitude">
-								<span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-							</div>
-							
-						</div>
-						<div class="col-sm-12">
-							
-							<?php echo $map['html'] ?>
-						</div>
-					</div>
 
 					<div class="form-group">
 						<label for="inputText3" class="col-form-label">Alamat Majelis</label>
@@ -144,6 +97,12 @@
 						<input required="required" type="file" accept="image/jpg, image/jpeg, image/png" name="foto">
 					</div>
 
+					<script type="text/javascript">
+						$(document).ready(function() {
+							$('#summernote').summernote();
+							$('#summernote2').summernote();
+						});
+					</script>
 
 
 
@@ -171,7 +130,7 @@
 				</a>
 			</div>
 			<div class="modal-body">
-				<form action='<?php echo base_url() ?>Admin/update_majelis' method="POST" enctype="multipart/form-data">
+				<form action='<?php echo base_url() ?>majelis/update_majelis' method="POST" enctype="multipart/form-data">
 
 					<div class="form-group">
 						<label for="inputText3" class="col-form-label">Nama Majelis</label>
@@ -218,11 +177,6 @@
 </div>
 
 <script>
-	function setMapToForm(latitude, longitude) 
-	{
-		$('input[name="latitude"]').val(latitude);
-		$('input[name="longitude"]').val(longitude);
-	}
 	$(document).ready(function() {
         // Untuk sunting
 
