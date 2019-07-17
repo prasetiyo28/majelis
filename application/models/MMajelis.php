@@ -34,7 +34,8 @@ class MMajelis extends CI_Model{
 
 	function get_id_majelis(){
 		$this->db->order_by('id_majelis','DESC');
-		$query = $this->db->get('users_majelis');
+		$this->db->limit(1);
+		$query = $this->db->get('majelis');
 		
 		return $query->row();
 	}

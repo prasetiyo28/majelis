@@ -90,12 +90,18 @@ class Admin extends CI_Controller {
 			$users['id_majelis'] = $this->MMajelis->get_id_majelis()->id_majelis;
 			$this->MMajelis->tambah_data('users_majelis',$users);
 
-			// redirect($_SERVER['HTTP_REFERER']);
+			redirect($_SERVER['HTTP_REFERER']);
 
 		}
 
 
 
+	}
+
+	public function get_id($value='')
+	{
+		$users['id_majelis'] = $this->MMajelis->get_id_majelis()->id_majelis;
+		echo json_encode($users);
 	}
 
 	public function update_majelis(){
