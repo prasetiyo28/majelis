@@ -186,10 +186,18 @@ class Admin extends CI_Controller {
 		// echo json_encode($data2);
 	}
 
+	public function cetak_laporan()
+	{
+		$data2['majelis'] =$this->MMajelis->get_majelis_all();
+		// echo "laporan";
+		// $data['content'] = $this->load->view('pages/data_user','',true);
+		$this->load->view('pages/cetak_laporan',$data2);
+	}
+
 	public function laporan()
 	{
-		echo "laporan";
-		// $data['content'] = $this->load->view('pages/data_user','',true);
-		// $this->load->view('default',$data);
+		$data['content'] = $this->load->view('pages/laporan','',true);
+		$this->load->view('default',$data);
+
 	}
 }

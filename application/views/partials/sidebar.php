@@ -12,7 +12,7 @@
 					<a href="<?php echo base_url() ?>admin/user"><i class="fa fa-user nav_icon"></i>Data User</a>
 				</li>
 				<li>
-					<a href="index.html"><i class="fa fa-book nav_icon"></i>Data Laporan</a>
+					<a href="<?php echo base_url() ?>admin/laporan"><i class="fa fa-book nav_icon"></i>Data Laporan</a>
 				</li>
 				
 			</ul>
