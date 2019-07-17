@@ -78,7 +78,7 @@ class MMajelis extends CI_Model{
 		$this->db->join('kategori','majelis.id_kategori = kategori.id_kategori');
 		$this->db->where('majelis.id_majelis',$id);
 		$query = $this->db->get();
-		return $query->result();
+		return $query->row();
 	}
 
 	function get_majelis_by_user($id){

@@ -12,14 +12,33 @@ class Api extends REST_Controller {
 
 
 
-	public function index_get(){
-// testing response
+	public function index_get($id=''){
+		if ($id=='') {
+	// testing response
+			$data = $this->MMajelis->get_majelis_all();
 
-		$response['status']=true;
-		$response['error']=false;
-		$response['message']='all majelis found';
-		$response['data'] =$this->MMajelis->get_majelis_all();
+			foreach ($data as $d) {
+				$d->id_majelis = (int)$d->id_majelis;
+				// echo $d->id_majelis;
+			}
+			$response['status']=true;
+			$response['error']=false;
+			$response['message']='all majelis found';
+			$response['data'] =$data;
 // tampilkan response
+
+		}else{
+			$data = $this->MMajelis->get_majelis_by_id($id);	
+			foreach ($data as $d) {
+				$d->id_majelis = (int)$d->id_majelis;
+				// echo $d->id_majelis;
+			}
+			$response['status']=true;
+			$response['error']=false;
+			$response['message']='all majelis found';
+			$response['data'] = $data;
+		}
+
 		$this->response($response);
 	}
 
@@ -83,10 +102,8 @@ class Api extends REST_Controller {
 			$response['data'] =$data;	
 		}else{
 			$data = $this->MMajelis->get_majelis_by_id($id);
-			foreach ($data as $d) {
-				$d->id_majelis = (int)$d->id_majelis;
-				// echo $d->id_majelis;
-			}
+			$data->id_majelis = (int)$data->id_majelis;
+			
 			$response['status']=true;
 			$response['error']=false;
 			$response['message']='all majelis found';
@@ -113,18 +130,17 @@ class Api extends REST_Controller {
 
 		}else{
 			$data = $this->MMajelis->get_majelis_by_id($id);
-			foreach ($data as $d) {
-				$d->id_majelis = (int)$d->id_majelis;
+			$data->id_majelis = (int)$data->id_majelis;
 				// echo $d->id_majelis;
-			}
+			
 			$response['status']=true;
 			$response['error']=false;
 			$response['message']='all majelis found';
 			$response['data'] =$data;
 
 		}
-		
-		$this->response($data);
+
+		$this->response($response);
 
 	}
 
@@ -226,4 +242,4 @@ class Api extends REST_Controller {
 	}
 }
 /* End of file Api */
-/* Location: ./application/controllers/Api */
+								/* Location: ./application/controllers/Api */
