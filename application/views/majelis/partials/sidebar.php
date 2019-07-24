@@ -12,6 +12,9 @@
 					<a href="<?php echo base_url() ?>majelis/kegiatan" ><i class="fa fa-calendar nav_icon"></i>Kegiatan Majelis</a>
 				</li>
 				<li>
+					<a href="<?php echo base_url() ?>majelis/Streaming" ><i class="fa fa-play-circle nav_icon"></i>Streaming</a>
+				</li>
+				<li>
 					<a href="<?php echo base_url() ?>majelis/data_infaq" ><i class="nav_icon">Rp.</i>Infaq</a>
 				</li>
 

@@ -64,6 +64,29 @@ class MMajelis extends CI_Model{
 		return $query->result();
 	}
 
+	function get_streaming_by_majelis($id){
+		$this->db->where('selesai','0');
+		$this->db->where('id_majelis',$id);
+		$query = $this->db->get('streaming');
+		return $query->result();
+	}
+
+	function get_streaming_all(){
+		$this->db->join('majelis','streaming.id_majelis = majelis.id_majelis');
+		$this->db->where('streaming.selesai','0');
+		$query = $this->db->get('streaming');
+		return $query->result();
+	}
+
+	function get_streaming_by_id($id){
+		$this->db->join('majelis','streaming.id_majelis = majelis.id_majelis');
+		$this->db->where('streaming.id_streaming',$id);
+		$this->db->where('streaming.selesai','0');
+		$query = $this->db->get('streaming');
+		return $query->result();
+	}
+
+
 	function get_majelis_all(){
 		$this->db->select('majelis.*, kategori.kategori');
 		$this->db->from('majelis');
@@ -154,6 +177,13 @@ class MMajelis extends CI_Model{
 		$this->db->set('deleted','1');
 		$this->db->where($param,$id);
 		$this->db->update($table);
+	}
+
+
+	function selesai($id){
+		$this->db->set('selesai','1');
+		$this->db->where('id_streaming',$id);
+		$this->db->update('streaming');
 	}
 
 	function update_data($table,$data,$id,$param){

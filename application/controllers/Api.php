@@ -42,9 +42,40 @@ class Api extends REST_Controller {
 		$this->response($response);
 	}
 
+	public function streaming_get($id=''){
+		if ($id=='') {
+	// testing response
+			$data = $this->MMajelis->get_streaming_all();
+
+			foreach ($data as $d) {
+				$d->id_streaming = (int)$d->id_streaming;
+				$d->id_majelis = (int)$d->id_majelis;
+				// echo $d->id_majelis;
+			}
+			$response['status']=true;
+			$response['error']=false;
+			$response['message']='all streaming found';
+			$response['data'] =$data;
+// tampilkan response
+
+		}else{
+			$data = $this->MMajelis->get_streaming_by_id($id);	
+			foreach ($data as $d) {
+				$d->id_majelis = (int)$d->id_majelis;
+				$d->id_streaming = (int)$d->id_streaming;
+				// echo $d->id_majelis;
+			}
+			$response['status']=true;
+			$response['error']=false;
+			$response['message']='all majelis found';
+			$response['data'] = $data;
+		}
+
+		$this->response($response);
+	}
 	public function token_get()
 	{
-		$token = openssl_random_pseudo_bytes(40);
+		$token = openssl_random_pseudo_bytes(10);
 
 //Convert the binary data into hexadecimal representation.
 		$token = bin2hex($token);
@@ -94,6 +125,7 @@ class Api extends REST_Controller {
 
 			foreach ($data as $d) {
 				$d->id_majelis = (int)$d->id_majelis;
+
 				// echo $d->id_majelis;
 			}
 			$response['status']=true;
@@ -108,6 +140,7 @@ class Api extends REST_Controller {
 			$response['error']=false;
 			$response['message']='all majelis found';
 			$response['data'] =$data;
+			$response['data']->kegiatan = $this->MMajelis->get_kegiatan_by_majelis($id);
 
 		}
 
@@ -137,6 +170,7 @@ class Api extends REST_Controller {
 			$response['error']=false;
 			$response['message']='all majelis found';
 			$response['data'] =$data;
+			$response['data']->kegiatan = $this->MMajelis->get_kegiatan_by_majelis($id);
 
 		}
 
@@ -173,8 +207,26 @@ class Api extends REST_Controller {
 		$this->response($response);
 	}
 
+	public function pesan_post(){
+		$data['dari'] = $this->input->post('id_user');
+		$data['untuk'] = $this->input->post('id_majelis');
+		$data['pesan'] = $this->input->post('pesan');
+
+		$this->MMajelis->tambah_data('pesan',$data);
+
+		$response['data']->id_majelis = $data['untuk'];
+		$response['data']->id_user = $data['dari'];
+		$response['data']->pesan = $data['pesan'];
+		$response['status']=true;
+		$response['error']=false;
+		$response['message']='your message is sucessfully sent';
+
+		$this->response($response);
+
+	}
+
 	public function register_post(){
-		$token = openssl_random_pseudo_bytes(40);
+		$token = openssl_random_pseudo_bytes(10);
 
 //Convert the binary data into hexadecimal representation.
 		$token = bin2hex($token);
@@ -185,7 +237,7 @@ class Api extends REST_Controller {
 		// $data['jenis_kelamin'] = $_POST['jenis_kelamin'];
 		$data['email'] = $_POST['email'];
 		$data['password'] = md5($_POST['password']);
-		$data['token'] = $token;
+		$data['api_token'] = $token;
 		$data['verif'] = '1';
 
 		$data2['email'] = $_POST['email'];
@@ -242,4 +294,4 @@ class Api extends REST_Controller {
 	}
 }
 /* End of file Api */
-								/* Location: ./application/controllers/Api */
+/* Location: ./application/controllers/Api */

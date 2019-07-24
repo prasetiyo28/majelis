@@ -48,6 +48,16 @@ class Majelis extends CI_Controller {
 		// echo json_encode($data2);
 	}
 
+	public function streaming(){
+		$id = $this->session->userdata('majelis_id');
+
+		$data2['streaming'] = $this->MMajelis->get_streaming_by_majelis($id);
+		$data['content'] = $this->load->view('majelis/pages/data_streaming',$data2, true);
+		$this->load->view('majelis/default',$data);
+
+		// echo json_encode($data2);
+	}
+
 	public function update_majelis(){
 
 		$id = $this->session->userdata('majelis_id');
@@ -81,7 +91,58 @@ class Majelis extends CI_Controller {
 		$this->MMajelis->tambah_data('kegiatan',$data);
 		redirect('majelis/kegiatan');
 	}
-	
+
+	public function save_streaming()
+	{
+		$data['id_majelis'] = $this->session->userdata('majelis_id');
+		$data['judul'] = $this->input->post('judul');
+		$data['link'] = $this->input->post('link');
+		$data['deskripsi'] = $this->input->post('deskripsi');
+
+		// $this->MMajelis->tambah_data('streaming',$data);
+		define( 'API_ACCESS_KEY', 'AAAAtMZRoPI:APA91bGgueNYSv82l6hMRJ3szi9bEg_NwELmdfT7-iP_mIH-Gh1NRLs0-qTFwvO5Fy0xCPMleTqx-kdRpLvFP3UHadwUlwnICr3frxbXmeNLopqQos5nbkCBpZgkFgrdhH94-Ah2Zm7f');
+ //   $registrationIds = ;
+#prep the bundle
+		$msg = array
+		(
+			'body' 	=> 'Firebase Push Notification',
+			'title'	=> 'Vishal Thakkar',
+
+		);
+		$fields = array
+		(
+			'to'		=> 'fHbvlLMtbnA:APA91bFE4AZUOIfD7Ptmh3crxjU9rmQOMUx2AGpV31jm19_1Ru9XN2NuVmeNmZ9X45RSF1ousWKzf4TMAnaM6P-zQGbMijrxfON2xkg9B4mQpt-epZ03_3ffHAQcEZTQVtdh6utOgqTp',
+			'notification'	=> $msg
+		);
+		
+		
+		$headers = array
+		(
+			'Authorization: key=' . API_ACCESS_KEY,
+			'Content-Type: application/json'
+		);
+#Send Reponse To FireBase Server	
+		$ch = curl_init();
+		curl_setopt( $ch,CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send' );
+		curl_setopt( $ch,CURLOPT_POST, true );
+		curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
+		curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
+		curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
+		$result = curl_exec($ch );
+		echo $result;
+		curl_close( $ch );
+		redirect('majelis/streaming');
+	}
+
+	public function selesai($id)
+	{
+		$this->MMajelis->selesai($id);
+		redirect('majelis/streaming');
+	}
+
+
+
 }
 
 /* End of file Majelis.php */
