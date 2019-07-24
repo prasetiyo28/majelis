@@ -99,7 +99,7 @@ class Majelis extends CI_Controller {
 		$data['link'] = $this->input->post('link');
 		$data['deskripsi'] = $this->input->post('deskripsi');
 
-		// $this->MMajelis->tambah_data('streaming',$data);
+		$this->MMajelis->tambah_data('streaming',$data);
 		define( 'API_ACCESS_KEY', 'AAAAtMZRoPI:APA91bGgueNYSv82l6hMRJ3szi9bEg_NwELmdfT7-iP_mIH-Gh1NRLs0-qTFwvO5Fy0xCPMleTqx-kdRpLvFP3UHadwUlwnICr3frxbXmeNLopqQos5nbkCBpZgkFgrdhH94-Ah2Zm7f');
  //   $registrationIds = ;
 #prep the bundle
