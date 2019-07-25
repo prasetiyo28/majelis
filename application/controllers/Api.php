@@ -237,7 +237,7 @@ class Api extends REST_Controller {
 		// $data['jenis_kelamin'] = $_POST['jenis_kelamin'];
 		$data['email'] = $_POST['email'];
 		$data['password'] = md5($_POST['password']);
-		$data['api_token'] = $token;
+		$data['token'] = $token;
 		$data['verif'] = '1';
 
 		$data2['email'] = $_POST['email'];
@@ -248,9 +248,15 @@ class Api extends REST_Controller {
 			$register = $this->MMajelis->tambah_data($tabel,$data);
 
 			if ($register) {
+				$register = $this->MMajelis->get_register();
+				
+				
+				$register->api_token = $register->token;
+				
+
 				$response['status']=true;
 				$response['error']=false;
-				$response['data']=$this->MMajelis->get_register();
+				$response['data']= $register;
 				$response['message']='register sucessfully';
 
 
@@ -274,6 +280,8 @@ class Api extends REST_Controller {
 		$data['blocked'] = '0';
 
 		$login = $this->MMajelis->cek_login_users($data);
+		$login->api_token = $login->token;
+		
 		if ($login) {
 			$response['status']=true;			
 			$response['error']=false;

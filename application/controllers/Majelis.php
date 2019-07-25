@@ -105,8 +105,8 @@ class Majelis extends CI_Controller {
 #prep the bundle
 		$msg = array
 		(
-			'body' 	=> 'Firebase Push Notification',
-			'title'	=> 'Vishal Thakkar',
+			'body' 	=> 'Ada Streaming Baru',
+			'title'	=> 'Aplikasi Majelis Taklim',
 
 		);
 		$fields = array
