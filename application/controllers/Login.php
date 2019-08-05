@@ -58,6 +58,11 @@ class Login extends CI_Controller {
 
 	}
 
+	public function verifikasi($id){
+		$this->MMajelis->verifikasi('users',$id,'id_user');
+		echo "berhasil verifikasi";
+	}
+
 	public function logout(){
 		$this->session->sess_destroy();
 		redirect ('login');

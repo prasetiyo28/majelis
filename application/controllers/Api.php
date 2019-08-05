@@ -238,7 +238,7 @@ class Api extends REST_Controller {
 		$data['email'] = $_POST['email'];
 		$data['password'] = md5($_POST['password']);
 		$data['token'] = $token;
-		$data['verif'] = '1';
+		$data['verif'] = '0';
 
 		$data2['email'] = $_POST['email'];
 		$tabel = 'users';
@@ -253,7 +253,7 @@ class Api extends REST_Controller {
 				
 				$register->api_token = $register->token;
 				
-
+				$this->send($register->id_user,$register->email);
 				$response['status']=true;
 				$response['error']=false;
 				$response['data']= $register;
@@ -269,8 +269,41 @@ class Api extends REST_Controller {
 			$response['message']='email is already in use';
 		}
 
+
+
 		$this->response($response);
 
+	}
+
+	public function send($id,$email){
+		$htmlContent = '<h1>Klik Link di bawah ini untuk memverifikasi akun anda</h1>';
+		$htmlContent .= '<a href='.base_url().'register/verifikasi/'.$id.'>Verifikasi</a>';
+
+
+		$ci = get_instance();
+		$ci->load->library('email');
+		$config['protocol'] = "smtp";
+		$config['smtp_host'] = "mail.plug-in.id";
+		$config['smtp_port'] = "587";
+		$config['smtp_user'] = "majelis@plug-in.id";
+		$config['smtp_pass'] = "M_ajelis12345";
+		$config['charset'] = "utf-8";
+		$config['mailtype'] = "html";
+		$config['newline'] = "\r\n";
+		$config['crlf'] = "\r\n";
+		$ci->email->initialize($config);
+		$ci->email->from('majelis@plug-in.id', 'Verif majelis');
+		$list = array($email);
+		$ci->email->to($list);
+		$ci->email->subject('Verifikasi Majelis');
+
+
+		$ci->email->message($htmlContent);
+		if ($this->email->send()) {
+			echo 'Email sent.';
+		} else {
+			show_error($this->email->print_debugger());
+		}
 	}
 
 	public function login_post(){
@@ -296,6 +329,27 @@ class Api extends REST_Controller {
 
 
 		}
+
+		$this->response($response);
+
+	}
+
+
+	public function fcm_post(){
+		$data['api_token'] = $_POST['api_token'];
+		$data['firebase_token'] = $_POST['firebase_token'];
+		
+		// $login = $this->MMajelis->cek_login_users($data);
+		// $login->api_token = $login->token;
+		
+		
+
+		$response['status']=true;			
+		$response['error']=false;
+		$response['message']='token received';			
+		$response['data']=$data;			
+
+
 
 		$this->response($response);
 
