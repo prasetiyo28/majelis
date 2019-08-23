@@ -15,6 +15,9 @@
 					<a href="<?php echo base_url() ?>majelis/Streaming" ><i class="fa fa-play-circle nav_icon"></i>Streaming</a>
 				</li>
 				<li>
+					<a href="<?php echo base_url() ?>majelis/pesan_majelis" ><i class="fa fa-inbox nav_icon"></i>Pesan Masuk</a>
+				</li>
+				<li>
 					<a href="<?php echo base_url() ?>majelis/data_infaq" ><i class="nav_icon">Rp.</i>Infaq</a>
 				</li>
 

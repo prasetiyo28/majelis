@@ -9,11 +9,10 @@
 						<tr>
 							<th>#</th>
 							<th>Nama</th>
-							<th>Alamat</th>
-							<th>Majelis Taklim</th>
-							<th>Jenis Kelamin</th>
+							<th>Email</th>
+							<!-- <th>Firebase Token</th> -->
 							
-							<th>Action</th>
+							<!-- <th>Action</th> -->
 						</tr>
 					</thead>
 					<tbody>
@@ -21,15 +20,14 @@
 							<tr>
 								<th scope="row"><?php echo $no++; ?></th>
 								<td><?php echo $u->nama; ?></td>
-								<td><?php echo $u->alamat; ?></td>
-								<td><?php echo $u->nama_majelis; ?></td>
-								<td><?php echo $u->jenis_kelamin; ?></td>
+								<td><?php echo $u->email; ?></td>
+								<!-- <td><?php echo $u->firebase_token; ?></td> -->
 								
-								<td>
+							<!-- 	<td>
 									<a class="btn btn-info" href="">Detail</a>
-									<!-- <a class="btn btn-info" href="">Edit</a> -->
+									<a class="btn btn-info" href="">Edit</a>
 									<a class="btn btn-danger" href="">Block</a>
-								</td>
+								</td> -->
 							</tr>
 
 						<?php } ?>

@@ -141,6 +141,7 @@ class Api extends REST_Controller {
 			$response['message']='all majelis found';
 			$response['data'] =$data;
 			$response['data']->kegiatan = $this->MMajelis->get_kegiatan_by_majelis($id);
+			$response['data']->pesan = $this->MMajelis->get_pesan_by_majelis($id);
 
 		}
 
@@ -171,6 +172,7 @@ class Api extends REST_Controller {
 			$response['message']='all majelis found';
 			$response['data'] =$data;
 			$response['data']->kegiatan = $this->MMajelis->get_kegiatan_by_majelis($id);
+			$response['data']->pesan = $this->MMajelis->get_pesan_by_majelis($id);
 
 		}
 
@@ -213,14 +215,13 @@ class Api extends REST_Controller {
 		$data['pesan'] = $this->input->post('pesan');
 
 		$this->MMajelis->tambah_data('pesan',$data);
-
-		$response['data']->id_majelis = $data['untuk'];
-		$response['data']->id_user = $data['dari'];
-		$response['data']->pesan = $data['pesan'];
 		$response['status']=true;
 		$response['error']=false;
 		$response['message']='your message is sucessfully sent';
-
+		$response['data']->id_majelis = $data['untuk'];
+		$response['data']->id_user = $data['dari'];
+		$response['data']->pesan = $data['pesan'];
+		
 		$this->response($response);
 
 	}
@@ -277,14 +278,14 @@ class Api extends REST_Controller {
 
 	public function send($id,$email){
 		$htmlContent = '<h1>Klik Link di bawah ini untuk memverifikasi akun anda</h1>';
-		$htmlContent .= '<a href='.base_url().'register/verifikasi/'.$id.'>Verifikasi</a>';
+		$htmlContent .= '<a href='.base_url().'login/verifikasi/'.$id.'>Verifikasi</a>';
 
 
 		$ci = get_instance();
 		$ci->load->library('email');
 		$config['protocol'] = "smtp";
-		$config['smtp_host'] = "mail.plug-in.id";
-		$config['smtp_port'] = "587";
+		$config['smtp_host'] = "ssl://mail.plug-in.id";
+		$config['smtp_port'] = "465";
 		$config['smtp_user'] = "majelis@plug-in.id";
 		$config['smtp_pass'] = "M_ajelis12345";
 		$config['charset'] = "utf-8";
@@ -314,7 +315,9 @@ class Api extends REST_Controller {
 
 		$login = $this->MMajelis->cek_login_users($data);
 		$login->api_token = $login->token;
-		
+		$login->firebase_token = $_POST['firebase_token'];
+		$update['firebase_token'] =  $_POST['firebase_token'];
+		$this->MMajelis->update_data('users',$update,$login->id_user,'id_user');
 		if ($login) {
 			$response['status']=true;			
 			$response['error']=false;

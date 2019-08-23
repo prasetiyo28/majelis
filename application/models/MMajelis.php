@@ -71,6 +71,14 @@ class MMajelis extends CI_Model{
 		return $query->result();
 	}
 
+	function get_pesan_by_majelis($id){
+		$this->db->select('users.nama, pesan.pesan');
+		$this->db->where('pesan.untuk',$id);
+		$this->db->join('users','pesan.dari = users.id_user');
+		$query = $this->db->get('pesan');
+		return $query->result();
+	}
+
 	function get_streaming_all(){
 		$this->db->join('majelis','streaming.id_majelis = majelis.id_majelis');
 		$this->db->where('streaming.selesai','0');
@@ -134,9 +142,9 @@ class MMajelis extends CI_Model{
 	}
 
 	function get_users_all(){
-		$this->db->select('users.*, majelis.nama_majelis as nama_majelis');
+		$this->db->select('users.*');
 		$this->db->from('users');
-		$this->db->join('majelis','majelis.id_majelis = users.id_majelis');
+		// $this->db->join('majelis','majelis.id_majelis = users.id_majelis');
 		$this->db->where('users.deleted','0');
 		$query = $this->db->get();
 		return $query->result();

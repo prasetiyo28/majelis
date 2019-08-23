@@ -99,6 +99,55 @@ class Majelis extends CI_Controller {
 		$data['link'] = $this->input->post('link');
 		$data['deskripsi'] = $this->input->post('deskripsi');
 
+		$this->MMajelis->tambah_data('streaming',$data);
+		define( 'API_ACCESS_KEY', 'AAAAwBXlyeY:APA91bEKoXlizXHDqXVOju1L_Nnjz67cIKTtN54e2XILztdh1uuEkBX8-Qj2Ltn5ycrW42L2bD_lZuXH6-RnvGah0gS6jo4vAaXnPAW79j5NGnjyHIUiBpp-ggxTjKnEIUucuQBpSgeb');
+ //   $registrationIds = ;
+#prep the bundle
+		$msg = array
+		(
+			'body' 	=> 'Ada Streaming Baru',
+			'title'	=> 'Aplikasi Majelis Taklim',
+
+		);
+		$id_fcm = $this->MMajelis->get_users_all();
+		// echo  json_encode($id_fcm);
+		foreach ($id_fcm as $id ) {
+			if ($id->firebase_token != null) {
+				$fields = array
+				(
+					'to'		=> $id->firebase_token,
+					'notification'	=> $msg
+				);
+
+
+				$headers = array
+				(
+					'Authorization: key=' . API_ACCESS_KEY,
+					'Content-Type: application/json'
+				);
+#Send Reponse To FireBase Server	
+				$ch = curl_init();
+				curl_setopt( $ch,CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send' );
+				curl_setopt( $ch,CURLOPT_POST, true );
+				curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
+				curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
+				curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
+				curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
+				$result = curl_exec($ch );
+				echo $result;
+				curl_close( $ch );
+			}
+		}
+		redirect('majelis/streaming');
+	}
+
+	public function coba_fcm()
+	{
+		// $data['id_majelis'] = $this->session->userdata('majelis_id');
+		// $data['judul'] = $this->input->post('judul');
+		// $data['link'] = $this->input->post('link');
+		// $data['deskripsi'] = $this->input->post('deskripsi');
+
 		// $this->MMajelis->tambah_data('streaming',$data);
 		define( 'API_ACCESS_KEY', 'AAAAwBXlyeY:APA91bEKoXlizXHDqXVOju1L_Nnjz67cIKTtN54e2XILztdh1uuEkBX8-Qj2Ltn5ycrW42L2bD_lZuXH6-RnvGah0gS6jo4vAaXnPAW79j5NGnjyHIUiBpp-ggxTjKnEIUucuQBpSgeb');
  //   $registrationIds = ;
@@ -109,30 +158,38 @@ class Majelis extends CI_Controller {
 			'title'	=> 'Aplikasi Majelis Taklim',
 
 		);
-		$fields = array
-		(
-			'to'		=> 'fI5xht2Gc7U:APA91bEnVskK3PB6oeTIJGoULTTetv9Lj2jvExwJVJPP21oE7YhI4qDSxrDJNXpnPfFHLcyEUnKNY-hcbVGSTaKu40HOhYrVafkdYJmL01dywb1V-gBbV8RtLihW6D9w5JDMgJ1iFvS0',
-			'notification'	=> $msg
-		);
-		
-		
-		$headers = array
-		(
-			'Authorization: key=' . API_ACCESS_KEY,
-			'Content-Type: application/json'
-		);
+
+		$id_fcm = $this->MMajelis->get_users_all();
+		// echo  json_encode($id_fcm);
+		foreach ($id_fcm as $id ) {
+			if ($id->firebase_token != null) {
+				$fields = array
+				(
+					'to'		=> $id->firebase_token,
+					'notification'	=> $msg
+				);
+
+
+				$headers = array
+				(
+					'Authorization: key=' . API_ACCESS_KEY,
+					'Content-Type: application/json'
+				);
 #Send Reponse To FireBase Server	
-		$ch = curl_init();
-		curl_setopt( $ch,CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send' );
-		curl_setopt( $ch,CURLOPT_POST, true );
-		curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
-		curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
-		curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
-		$result = curl_exec($ch );
-		echo $result;
-		curl_close( $ch );
-		redirect('majelis/streaming');
+				$ch = curl_init();
+				curl_setopt( $ch,CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send' );
+				curl_setopt( $ch,CURLOPT_POST, true );
+				curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
+				curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
+				curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
+				curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
+				$result = curl_exec($ch );
+				echo $result;
+				curl_close( $ch );
+			}
+		}
+		
+		// redirect('majelis/streaming');
 	}
 
 	public function selesai($id)
