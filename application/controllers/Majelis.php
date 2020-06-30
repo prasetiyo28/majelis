@@ -38,6 +38,17 @@ class Majelis extends CI_Controller {
 
 		// echo json_encode($data2);
 	}
+
+	public function pesan_majelis(){
+		$id = $this->session->userdata('majelis_id');
+
+		$data2['pesan'] = $this->MMajelis->get_pesan_by_majelis($id);
+		$data['content'] = $this->load->view('majelis/pages/data_pesan',$data2, true);
+		$this->load->view('majelis/default',$data);
+
+		// echo json_encode($data2);
+	}
+
 	public function kegiatan(){
 		$id = $this->session->userdata('majelis_id');
 

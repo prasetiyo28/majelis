@@ -357,6 +357,35 @@ class Api extends REST_Controller {
 		$this->response($response);
 
 	}
+
+	public function pencarian_post(){
+
+		$cari = $this->input->post('cari');
+		$kegiatan = $this->MMajelis->get_kegiatan_by_cari($cari);
+		// foreach ($kegiatan as $r ) {
+		// 	$data['id'] = $kegiatan->nama_kegiatan;
+		// 	$data['nama_kegiatan'] = $kegiatan->nama_kegiatan;
+		// 	$data['tempat'] = $kegiatan->nama_majelis;
+		
+		// }
+
+		if (empty($kegiatan)) {
+			$response['status']=false;
+			$response['error']=true;
+			$response['message']='kegiatan not found';
+			
+		}else{
+			$response['status']=true;
+			$response['error']=false;
+			$response['message']='all majelis found';
+			$response['data'] =$kegiatan;	
+
+		}
+
+		$this->response($response);
+
+
+	}
 }
 /* End of file Api */
 /* Location: ./application/controllers/Api */

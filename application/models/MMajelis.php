@@ -64,6 +64,18 @@ class MMajelis extends CI_Model{
 		return $query->result();
 	}
 
+	function get_kegiatan_by_cari($cari){
+		$this->db->select('kegiatan.id,kegiatan.nama_kegiatan,kegiatan.tempat,kegiatan.tanggal,kategori.kategori,majelis.nama_majelis');
+		$this->db->or_like('kegiatan.tempat',$cari);
+		$this->db->or_like('majelis.nama_majelis',$cari);
+		$this->db->or_like('kategori.kategori',$cari);
+		$this->db->or_like('kegiatan.nama_kegiatan',$cari);
+		$this->db->join('majelis','majelis.id_majelis = kegiatan.id_majelis');
+		$this->db->join('kategori','majelis.id_kategori = kategori.id_kategori');
+		$query = $this->db->get('kegiatan');
+		return $query->result();
+	}
+
 	function get_streaming_by_majelis($id){
 		$this->db->where('selesai','0');
 		$this->db->where('id_majelis',$id);
