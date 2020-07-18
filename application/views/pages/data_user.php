@@ -1,9 +1,9 @@
 <div id="page-wrapper">
 	<div class="main-page">
 		<div class="tables">
-			<h3 class="title1">Data Majelis</h3>
+			<h3 class="title1">Data User</h3>
 			<div class="panel-body widget-shadow">
-				<h4>Basic Table:</h4>
+				<h4>Data User:</h4>
 				<table class="table">
 					<thead>
 						<tr>
