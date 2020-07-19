@@ -34,8 +34,8 @@
 
 
 					</tbody>
-					<tfoot>
-						<a class="btn btn-success" href="">Tambah Baru</a>
+					<!-- <tfoot>
+						<a class="btn btn-success" href="">Tambah Baru</a> -->
 					</tfoot>
 				</table>
 			</div>
