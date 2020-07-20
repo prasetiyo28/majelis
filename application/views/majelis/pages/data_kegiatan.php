@@ -29,6 +29,11 @@
 									<!-- <a class="btn btn-info" href="">Edit</a> -->
 									<a class="btn btn-danger" href="">Delete</a>
 								</td>
+								<td>
+									<!-- <a class="btn btn-info" href="">Detail</a> -->
+									<!-- <a class="btn btn-info" href="">Edit</a> -->
+									<a class="btn btn-danger" href="">edit</a>
+								</td>
 							</tr>
 
 						<?php } ?>
