@@ -72,9 +72,11 @@
 
 					<div class="form-group">
 						<label for="inputText3" class="col-form-label">Link</label>
-						<input required="required" id="inputText3" placeholder="Link..." name="link" type="text" class="form-control">
-
+						<input required="required" id="inputText3" placeholder="Link..." pattern="http://www\.youtube\.com\/(.+)|https://www\.youtube\.com\/(.+)" name="link" type="url" class="form-control">
+						
 					</div>
+					
+
 
 
 

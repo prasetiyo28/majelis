@@ -76,7 +76,7 @@
 
 					<div class="form-group">
 						<label for="inputText3" class="col-form-label">Tanggal</label>
-						<input required="required" id="inputText3" name="tanggal" type="date" class="form-control">
+						<input required="required" id="inputText3" name="tanggal" type="date" min="<?php echo date("yy-m-d")?>" class="form-control">
 
 					</div>
 

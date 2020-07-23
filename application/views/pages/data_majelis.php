@@ -89,12 +89,12 @@
 
 					<div class="form-group">
 						<label for="inputText3" class="col-form-label">Kontak Majelis</label>
-						<input required="required" id="inputText3" name="kontak" type="text" class="form-control" placeholder="Kontak Majelis...">
+						<input required="required" id="inputText3" name="kontak" type="tel" class="form-control" placeholder="Kontak Majelis...">
 
 					</div>
 					<div class="form-group">
 						<label for="inputText3" class="col-form-label">Email Majelis</label>
-						<input required="required" id="inputText3" name="email" type="email" class="form-control" placeholder="Email Majelis...">
+						<input required="required" id="inputText3" name="email" type="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" class="form-control" placeholder="Email Majelis...">
 
 					</div>
 
