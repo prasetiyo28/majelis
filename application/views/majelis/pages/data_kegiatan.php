@@ -32,7 +32,7 @@
 								<td>
 									<!-- <a class="btn btn-info" href="">Detail</a> -->
 									<!-- <a class="btn btn-info" href="">Edit</a> -->
-									<a class="btn btn-danger" href="">edit</a>
+									<a class="btn btn-success" href="">edit</a>
 								</td>
 							</tr>
 
