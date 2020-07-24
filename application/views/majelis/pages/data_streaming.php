@@ -25,7 +25,7 @@
 								
 								
 								<td>
-									<a class="btn btn-info" href="<?php echo base_url() ?>Majelis/selesai/<?php echo $k->id_streaming ?>">Selesai</a>
+									<a class="btn btn-success" href="<?php echo base_url() ?>Majelis/selesai/<?php echo $k->id_streaming ?>">Selesai</a>
 								</td>
 								<td>
 									<a class="btn btn-info" href="<?php echo base_url() ?>Majelis/selesai/<?php echo $k->id_streaming ?>">Edit</a>
