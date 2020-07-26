@@ -45,6 +45,9 @@
 									<?php }else{ ?>
 										<a class="btn btn-default" href="<?php echo base_url() ?>admin/block_majelis/<?php echo $m->id_majelis ?>">Block</a>
 									<?php } ?>
+
+									<a class="btn btn-default" href="<?php echo base_url() ?>admin/reset_password/<?php echo $m->id_majelis ?>">Reset Password</a>
+									<br>
 									
 								</td>
 							</tr>
@@ -220,13 +223,40 @@
 <script>
 	function setMapToForm(latitude, longitude) 
 	{
+		
+		
+		var addressLoc = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&key=AIzaSyCz1LkOZmWBZRyC1WUJcrOqZiK-7yMuQXk';
+		var city;
+                let address = $.get(addressLoc, function(data){
+    // console.log("address",data.results[0].formatted_address.split(','));
+    var loc = data.results[0].formatted_address;
+    var cari = loc.toLowerCase().search("tegal");
+    
+
+    if (cari > 1) {
 		$('input[name="latitude"]').val(latitude);
 		$('input[name="longitude"]').val(longitude);
+		$('input[name="alamat"]').val(loc);
+	}else{
+		alert("hanya dapat memilih di kabupaten tegal");
+		$('input[name="latitude"]').val('');
+		$('input[name="longitude"]').val('');
 	}
+   
+    
+    return loc
+                });
+	}
+
+	function cekMap(event) 
+	{
+		console.log("ini event",event.latlng);
+	}
+
 	$(document).ready(function() {
         // Untuk sunting
 
-        
+        console.log("data_map",map);
 
         $('#edit-data').on('show.bs.modal', function (event) {
             var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan

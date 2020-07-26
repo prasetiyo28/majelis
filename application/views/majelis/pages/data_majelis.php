@@ -157,11 +157,10 @@
 						<input type="text" id="alamat" name="alamat"  class="form-control" placeholder="Alamat Majelis...">
 					</div>
 
-
-
-
-
-
+					<div class="form-group">
+						<label for="inputText3" class="col-form-label">Password</label>
+						<input type="password" id="password" name="password"  class="form-control" placeholder="kosongkan password jika tidak diganti">
+					</div>
 
 
 				</div>

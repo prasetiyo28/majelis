@@ -33,9 +33,10 @@ class Majelis extends CI_Controller {
 		$id = $this->session->userdata('majelis_id');
 
 		$data2['majelis'] = $this->MMajelis->get_majelis_by_user($id);
+		$data2['infaq'] = $this->MMajelis->get_infaq_by_id($id);
 		$data['content'] = $this->load->view('majelis/pages/data_infaq',$data2, true);
 		$this->load->view('majelis/default',$data);
-
+		
 		// echo json_encode($data2);
 	}
 
@@ -76,9 +77,35 @@ class Majelis extends CI_Controller {
 		$data['ketua'] = $this->input->post('ketua');
 		$data['alamat'] = $this->input->post('alamat');
 		$data['kontak'] = $this->input->post('kontak');
+		
+		$password = $this->input->post('password');
+		if($password != ''){
+			$data2['password'] = md5($password);
+			$this->MMajelis->update_data('users_majelis',$data2,$id,'id_majelis');
+		}
+		
 		$table = 'majelis';
 		$param = 'id_majelis';
 		$this->MMajelis->update_data($table,$data,$id,$param);
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function save_infaq(){
+
+		$data['id_majelis'] = $this->session->userdata('majelis_id');
+		$data['nama'] = $this->input->post('nama');
+		$data['infaq'] = $this->input->post('jumlah');
+		
+		$table = 'infaq';
+		$this->MMajelis->tambah_data($table,$data);
+		
+		$id = $data['id_majelis'];
+		$data2['infaq'] = $this->MMajelis->get_infaq_sum_by_id($id)->infaq;
+		$table2 = 'majelis';
+		$param2 = 'id_majelis';
+	
+		$this->MMajelis->update_data($table2,$data2,$id,$param2);
+		
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 
@@ -207,6 +234,20 @@ class Majelis extends CI_Controller {
 	{
 		$this->MMajelis->selesai($id);
 		redirect('majelis/streaming');
+	}
+
+	public function hapus_infaq($id)
+	{
+		$this->MMajelis->hapus_infaq($id);
+
+		$id_majelis = $this->session->userdata('majelis_id');
+		$data2['infaq'] = $this->MMajelis->get_infaq_sum_by_id($id)->infaq;
+		$table2 = 'majelis';
+		$param2 = 'id_majelis';
+	
+		$this->MMajelis->update_data($table2,$data2,$id_majelis,$param2);
+		
+		redirect('majelis/data_infaq');
 	}
 
 

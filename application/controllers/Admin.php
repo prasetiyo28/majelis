@@ -35,7 +35,7 @@ class Admin extends CI_Controller {
 		$marker = array();
 		$marker['position'] = '-6.880029,109.124192';
 		$marker['draggable'] = true;
-		$marker['ondragend'] = 'setMapToForm(event.latLng.lat(), event.latLng.lng());';
+		$marker['ondragend'] = 'setMapToForm(event.latLng.lat(), event.latLng.lng());checkMap(event);';
 		$this->googlemaps->add_marker($marker);
 		$data['map'] = $this->googlemaps->create_map();
 		$data2['map'] = $this->googlemaps->create_map();
@@ -57,7 +57,16 @@ class Admin extends CI_Controller {
 		$data['ketua'] = $_POST['ketua'];
 		$data['id_kategori'] = $_POST['kategori'];
 		$data['kontak'] = $_POST['kontak'];
-		$data['alamat'] = $_POST['alamat'];
+		
+		$validasi_phone = $this->MMajelis->get_number_phone($data['kontak']);
+		if (count($validasi_phone) > 0) {
+			echo '<script language="javascript">' .
+			'alert("Nomor Sudah Digunakan");' .
+			'setTimeout(function(){ window.location.href = "/majelis/admin/majelis"; });' .
+			'</script>';
+			// redirect($_SERVER['HTTP_REFERER']);
+		}else{
+			$data['alamat'] = $_POST['alamat'];
 		$data['longitude'] = $_POST['longitude'];
 		$data['latitude'] = $_POST['latitude'];
 		
@@ -93,6 +102,9 @@ class Admin extends CI_Controller {
 			redirect($_SERVER['HTTP_REFERER']);
 
 		}
+		}
+		
+		
 
 
 
@@ -133,6 +145,11 @@ class Admin extends CI_Controller {
 
 	public function hapus_majelis($id){
 		$this->MMajelis->hapus_majelis($id);
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function reset_password($id){
+		$this->MMajelis->reset_password($id);
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 

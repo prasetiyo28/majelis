@@ -63,6 +63,22 @@ class MMajelis extends CI_Model{
 		$query = $this->db->get('kegiatan');
 		return $query->result();
 	}
+	
+	function get_infaq_by_id($id){
+		$this->db->where('id_majelis',$id);
+		$query = $this->db->get('infaq');
+		return $query->result();
+	}
+
+	function get_infaq_sum_by_id($id){
+		$this->db->where('id_majelis',$id);
+		$this->db->select_sum('infaq');
+		$query = $this->db->get('infaq');
+		return $query->row();
+	}
+
+
+	
 
 	function get_kegiatan_by_cari($cari){
 		$this->db->select('kegiatan.id,kegiatan.nama_kegiatan,kegiatan.tempat,kegiatan.tanggal,kategori.kategori,majelis.nama_majelis');
@@ -88,6 +104,12 @@ class MMajelis extends CI_Model{
 		$this->db->where('pesan.untuk',$id);
 		$this->db->join('users','pesan.dari = users.id_user');
 		$query = $this->db->get('pesan');
+		return $query->result();
+	}
+
+	function get_number_phone($phone){
+		$this->db->where('kontak',$phone);
+		$query = $this->db->get('majelis');
 		return $query->result();
 	}
 
@@ -199,6 +221,11 @@ class MMajelis extends CI_Model{
 		$this->db->update($table);
 	}
 
+	function hapus_infaq($id){
+		$this->db->where('id_infaq',$id);
+		$this->db->delete('infaq');
+	}
+
 
 	function selesai($id){
 		$this->db->set('selesai','1');
@@ -234,5 +261,12 @@ class MMajelis extends CI_Model{
 		$this->db->set('deleted','1');
 		$this->db->where('id_majelis',$id);
 		$this->db->update('majelis');
+	}
+
+	function reset_password($id){
+		
+		$this->db->set('password',md5('majelis12345'));
+		$this->db->where('id_majelis',$id);
+		$this->db->update('users_majelis');
 	}
 }
