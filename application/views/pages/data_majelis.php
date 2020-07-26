@@ -238,7 +238,7 @@
 		$('input[name="longitude"]').val(longitude);
 		$('input[name="alamat"]').val(loc);
 	}else{
-		alert("hanya dapat memilih di kabupaten tegal");
+		alert("hanya dapat memilih di kabupaten/kota tegal");
 		$('input[name="latitude"]').val('');
 		$('input[name="longitude"]').val('');
 	}
