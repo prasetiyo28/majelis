@@ -226,6 +226,11 @@ class MMajelis extends CI_Model{
 		$this->db->delete('infaq');
 	}
 
+	function hapus_kegiatan($id){
+		$this->db->where('id',$id);
+		$this->db->delete('kegiatan');
+	}
+
 
 	function selesai($id){
 		$this->db->set('selesai','1');

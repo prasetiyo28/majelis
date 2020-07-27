@@ -90,6 +90,34 @@ class Majelis extends CI_Controller {
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 
+	public function update_kegiatan(){
+
+		$data['nama_kegiatan'] = $this->input->post('nama');
+		$data['tempat'] = $this->input->post('tempat');
+		$data['tanggal'] = $this->input->post('tanggal');
+		$id = $this->input->post('id');
+		
+		
+		$table = 'kegiatan';
+		$param = 'id';
+		$this->MMajelis->update_data($table,$data,$id,$param);
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function update_streaming(){
+
+		$data['judul'] = $this->input->post('judul');
+		$data['deskripsi'] = $this->input->post('deskripsi');
+		$data['link'] = $this->input->post('link');
+		$id = $this->input->post('id');
+		
+		
+		$table = 'streaming';
+		$param = 'id_streaming';
+		$this->MMajelis->update_data($table,$data,$id,$param);
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
 	public function save_infaq(){
 
 		$data['id_majelis'] = $this->session->userdata('majelis_id');
@@ -248,6 +276,12 @@ class Majelis extends CI_Controller {
 		$this->MMajelis->update_data($table2,$data2,$id_majelis,$param2);
 		
 		redirect('majelis/data_infaq');
+	}
+
+	public function hapus_kegiatan($id)
+	{
+		$this->MMajelis->hapus_kegiatan($id);		
+		redirect('majelis/kegiatan');
 	}
 
 
