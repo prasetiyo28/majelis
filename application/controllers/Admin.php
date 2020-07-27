@@ -62,7 +62,7 @@ class Admin extends CI_Controller {
 		if (count($validasi_phone) > 0) {
 			echo '<script language="javascript">' .
 			'alert("Nomor Sudah Digunakan");' .
-			'setTimeout(function(){ window.location.href = "/majelis/admin/majelis"; });' .
+			'setTimeout(function(){ window.location.href = "/admin/majelis"; });' .
 			'</script>';
 			// redirect($_SERVER['HTTP_REFERER']);
 		}else{
