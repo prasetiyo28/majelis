@@ -9,6 +9,9 @@
 					<a href="<?php echo base_url() ?>admin/majelis" ><i class="fa fa-list nav_icon"></i>Data Majelis Taklim</a>
 				</li>
 				<li>
+					<a href="<?php echo base_url() ?>admin/kategori" ><i class="fa fa-list nav_icon"></i>Data Kategori</a>
+				</li>
+				<li>
 					<a href="<?php echo base_url() ?>admin/user"><i class="fa fa-user nav_icon"></i>Data User</a>
 				</li>
 				<li>
