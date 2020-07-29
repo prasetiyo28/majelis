@@ -35,7 +35,7 @@ class Admin extends CI_Controller {
 		$marker = array();
 		$marker['position'] = '-6.880029,109.124192';
 		$marker['draggable'] = true;
-		$marker['ondragend'] = 'setMapToForm(event.latLng.lat(), event.latLng.lng());checkMap(event);';
+		$marker['ondragend'] = 'setMapToForm(event.latLng.lat(), event.latLng.lng());';
 		$this->googlemaps->add_marker($marker);
 		$data['map'] = $this->googlemaps->create_map();
 		$data2['map'] = $this->googlemaps->create_map();

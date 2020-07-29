@@ -125,7 +125,7 @@
 
 					<div class="form-group">
 						<label for="inputText3" class="col-form-label">Alamat Majelis</label>
-						<textarea name="alamat" class="form-control" placeholder="Alamat Majelis..."></textarea>
+						<input type="text" id="alamat_a" name="alamat"  class="form-control alamat_a" placeholder="Alamat Majelis...">
 					</div>
 
 
@@ -236,7 +236,8 @@
     if (cari > 1) {
 		$('input[name="latitude"]').val(latitude);
 		$('input[name="longitude"]').val(longitude);
-		$('input[name="alamat"]').val(loc);
+		$("#alamat_a").val(loc);
+		// console.log("address",loc);
 	}else{
 		alert("hanya dapat memilih di kabupaten/kota tegal");
 		$('input[name="latitude"]').val('');
@@ -248,10 +249,7 @@
                 });
 	}
 
-	function cekMap(event) 
-	{
-		console.log("ini event",event.latlng);
-	}
+	
 
 	$(document).ready(function() {
         // Untuk sunting
