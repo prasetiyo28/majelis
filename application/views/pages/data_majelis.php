@@ -254,7 +254,6 @@
 	$(document).ready(function() {
         // Untuk sunting
 
-        console.log("data_map",map);
 
         $('#edit-data').on('show.bs.modal', function (event) {
             var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan
