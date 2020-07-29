@@ -242,6 +242,7 @@
 		alert("hanya dapat memilih di kabupaten/kota tegal");
 		$('input[name="latitude"]').val('');
 		$('input[name="longitude"]').val('');
+		$("#alamat_a").val('');
 	}
    
     
