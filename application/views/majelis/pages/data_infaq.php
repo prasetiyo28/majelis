@@ -49,11 +49,23 @@
 				<tfoot>
 						<button type="button" class="btn btn-success" href="#" data-toggle="modal" data-target="#exampleModal">Tambah Infaq</button>
 					</tfoot>
-
+					<br>
+					<br>
+					<br>
+					<br>
+					<div class="col-md-12>
+						<h4 class="title">Data</h4>
+						<canvas id="line" height="300" width="400" style="width: 400px; height: 300px;"></canvas>
+					</div>
 			</div>
 		</div>
+		
 	</div>
+
+	
 </div>
+
+
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -140,3 +152,28 @@
         });
     });
 </script> -->
+
+
+<script>
+						
+						var lineChartData = {
+							labels : ["0",<?php foreach ($chart_infaq as $row) {
+							echo '"'.$row->month.'",';
+						}?>],
+							datasets : [
+								{
+									fillColor : "rgba(51, 51, 51, 0)",
+									strokeColor : "#4F52BA",
+									pointColor : "#4F52BA",
+									pointStrokeColor : "#fff",
+									data : [0,<?php foreach ($chart_infaq as $row) {
+							echo '"'.$row->infaq.'",';
+						}?>]
+								},
+								
+							]
+							
+						};
+						new Chart(document.getElementById("line").getContext("2d")).Line(lineChartData);
+						
+					</script>	

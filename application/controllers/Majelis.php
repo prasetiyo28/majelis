@@ -34,9 +34,11 @@ class Majelis extends CI_Controller {
 
 		$data2['majelis'] = $this->MMajelis->get_majelis_by_user($id);
 		$data2['infaq'] = $this->MMajelis->get_infaq_by_id($id);
+		$data2['chart_infaq'] = $this->MMajelis->get_infaq_chart_by_id($id);
 		$data['content'] = $this->load->view('majelis/pages/data_infaq',$data2, true);
 		$this->load->view('majelis/default',$data);
 		
+		// print_r($data2['chart_infaq']);
 		// echo json_encode($data2);
 	}
 
@@ -80,8 +82,21 @@ class Majelis extends CI_Controller {
 		
 		$password = $this->input->post('password');
 		if($password != ''){
-			$data2['password'] = md5($password);
-			$this->MMajelis->update_data('users_majelis',$data2,$id,'id_majelis');
+			$user['id_majelis'] = $id;
+			$user['password'] = md5($this->input->post('old'));
+			$cek_majelis = $this->MMajelis->cek_majelis($user);
+			// echo $cek_majelis;
+			// echo $user['id_majelis'] . '\n';
+			echo $user['password'];
+			
+			if (!isset($cek_majelis)) {
+				$this->session->set_flashdata('alert','gagal');
+				redirect($_SERVER['HTTP_REFERER']);	
+			}else{
+				$data2['password'] = md5($password);
+				$this->MMajelis->update_data('users_majelis',$data2,$id,'id_majelis');
+			}
+			
 		}
 		
 		$table = 'majelis';
@@ -102,6 +117,15 @@ class Majelis extends CI_Controller {
 		$param = 'id';
 		$this->MMajelis->update_data($table,$data,$id,$param);
 		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function verifikasi($id){
+
+		$data['verif'] = 1;
+		$table = 'majelis';
+		$param = 'id_majelis';
+		$this->MMajelis->update_data($table,$data,$id,$param);
+		redirect('login');
 	}
 
 	public function update_streaming(){

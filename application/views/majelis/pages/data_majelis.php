@@ -156,9 +156,15 @@
 						<label for="inputText3" class="col-form-label">Alamat Majelis</label>
 						<input type="text" id="alamat" name="alamat"  class="form-control" placeholder="Alamat Majelis...">
 					</div>
+					
 
 					<div class="form-group">
-						<label for="inputText3" class="col-form-label">Password</label>
+						<label for="inputText3" class="col-form-label">Password Lama</label>
+						<input type="password" id="old" name="old"  class="form-control" placeholder="kosongkan password jika tidak diganti">
+					</div>
+
+					<div class="form-group">
+						<label for="inputText3" class="col-form-label">Password Baru</label>
 						<input type="password" id="password" name="password"  class="form-control" placeholder="kosongkan password jika tidak diganti">
 					</div>
 
@@ -174,6 +180,12 @@
 		</div>
 	</div>
 </div>
+
+<?php if ($this->session->userdata('alert') == 'gagal') { ?>
+		<script>
+			alert('Password lama tidak sesuai , data gagal dirubah');
+		</script>
+<?php	} ?>
 
 <script>
 	$(document).ready(function() {

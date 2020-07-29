@@ -91,15 +91,21 @@ class Admin extends CI_Controller {
 			$datas = array('upload_data' => $this->upload->data());
 			$tabel = 'majelis';
 			$this->MMajelis->tambah_data($tabel,$data);
+			
 			$this->session->set_flashdata('alert','berhasil');
 
 
 			$users['email'] = $_POST['email'];
 			$users['password'] = md5('majelis12345');
 			$users['id_majelis'] = $this->MMajelis->get_id_majelis()->id_majelis;
-			$this->MMajelis->tambah_data('users_majelis',$users);
-
+			$register = $this->MMajelis->tambah_data('users_majelis',$users);
+// $this->send($register->id_majelis,$register->email);
+if ($register) {
+	$register = $this->MMajelis->get_register_majelis();
+	$this->send($register->id_majelis,$register->email);
+}
 			redirect($_SERVER['HTTP_REFERER']);
+			// echo json_encode($register);
 
 		}
 		}
@@ -108,6 +114,13 @@ class Admin extends CI_Controller {
 
 
 
+	}
+
+	public function save_kategori(){
+		$data['kategori'] = $_POST['kategori'];
+			$this->MMajelis->tambah_data('kategori',$data);
+			redirect($_SERVER['HTTP_REFERER']);
+	
 	}
 
 	public function get_id($value='')
@@ -129,8 +142,16 @@ class Admin extends CI_Controller {
 		$this->session->set_flashdata('alert','berhasil');
 		redirect($_SERVER['HTTP_REFERER']);
 		// echo json_encode($data);
+	}
 
-
+	public function update_kategori(){
+		$id = $_POST['id'];
+		$data['kategori'] = $_POST['kategori'];
+		$tabel = 'kategori';
+		$param='id_kategori';
+		$this->MMajelis->update_data($tabel,$data,$id,$param);
+		$this->session->set_flashdata('alert','berhasil');
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 
 	public function block_majelis($id){
@@ -203,6 +224,29 @@ class Admin extends CI_Controller {
 		// echo json_encode($data2);
 	}
 
+	public function kategori()
+	{
+		$data2['kategori'] =$this->MMajelis->get_kategori_all();
+		$data['content'] = $this->load->view('pages/data_kategori',$data2,true);
+		$this->load->view('default',$data);
+
+		// echo json_encode($data2);
+	}
+
+	public function hapus_kategori($id){
+		$data = $this->MMajelis->get_majelis_by_id_kategori($id);
+		if (count($data) > 0) {
+			$this->session->set_flashdata('alert','gagal');
+			redirect($_SERVER['HTTP_REFERER']);
+		}else{
+			$this->MMajelis->hapus_kategori($id);
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+		
+	}
+
+
+
 	public function cetak_laporan()
 	{
 		$data2['majelis'] =$this->MMajelis->get_majelis_all();
@@ -216,5 +260,36 @@ class Admin extends CI_Controller {
 		$data['content'] = $this->load->view('pages/laporan','',true);
 		$this->load->view('default',$data);
 
+	}
+
+	public function send($id,$email){
+		$htmlContent = '<h1>Klik Link di bawah ini untuk memverifikasi akun anda</h1>';
+		$htmlContent .= '<a href='.base_url().'majelis/verifikasi/'.$id.'>Verifikasi</a>';
+
+
+		$ci = get_instance();
+		$ci->load->library('email');
+		$config['protocol'] = "smtp";
+		$config['smtp_host'] = "ssl://mail.odxiety.com";
+		$config['smtp_port'] = "465";
+		$config['smtp_user'] = "majelis@odxiety.com";
+		$config['smtp_pass'] = "12345majelis";
+		$config['charset'] = "utf-8";
+		$config['mailtype'] = "html";
+		$config['newline'] = "\r\n";
+		$config['crlf'] = "\r\n";
+		$ci->email->initialize($config);
+		$ci->email->from('majelis@odxiety.com', 'Verif majelis');
+		$list = array($email);
+		$ci->email->to($list);
+		$ci->email->subject('Verifikasi Majelis');
+
+
+		$ci->email->message($htmlContent);
+		if ($this->email->send()) {
+			echo 'Email sent.';
+		} else {
+			show_error($this->email->print_debugger());
+		}
 	}
 }

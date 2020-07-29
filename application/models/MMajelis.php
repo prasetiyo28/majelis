@@ -32,6 +32,15 @@ class MMajelis extends CI_Model{
 		return $query->row();
 	}
 
+	function get_register_majelis(){
+		// $this->db->where($data);
+		$this->db->limit(1);
+		$this->db->order_by('id_users','desc');
+		$query = $this->db->get('users_majelis');
+		
+		return $query->row();
+	}
+
 	function get_id_majelis(){
 		$this->db->order_by('id_majelis','DESC');
 		$this->db->limit(1);
@@ -66,6 +75,15 @@ class MMajelis extends CI_Model{
 	
 	function get_infaq_by_id($id){
 		$this->db->where('id_majelis',$id);
+		$query = $this->db->get('infaq');
+		return $query->result();
+	}
+
+	function get_infaq_chart_by_id($id){
+		$this->db->where('id_majelis',$id);
+		$this->db->select_sum('infaq');
+		$this->db->select('DATE_FORMAT(tanggal,"%b") as month');
+		$this->db->group_by('MONTH(tanggal)');
 		$query = $this->db->get('infaq');
 		return $query->result();
 	}
@@ -147,6 +165,13 @@ class MMajelis extends CI_Model{
 		return $query->row();
 	}
 
+
+	function get_majelis_by_id_kategori($id){
+		$this->db->where('id_kategori',$id);
+		$query = $this->db->get('majelis');
+		return $query->result();
+	}
+
 	function get_majelis_by_user($id){
 		$this->db->select('majelis.*, kategori.kategori');
 		$this->db->from('majelis');
@@ -181,6 +206,11 @@ class MMajelis extends CI_Model{
 		// $this->db->join('majelis','majelis.id_majelis = users.id_majelis');
 		$this->db->where('users.deleted','0');
 		$query = $this->db->get();
+		return $query->result();
+	}
+
+	function get_kategori_all(){
+		$query = $this->db->get('kategori');
 		return $query->result();
 	}
 
@@ -266,6 +296,11 @@ class MMajelis extends CI_Model{
 		$this->db->set('deleted','1');
 		$this->db->where('id_majelis',$id);
 		$this->db->update('majelis');
+	}
+
+	function hapus_kategori($id){
+		$this->db->where('id_kategori',$id);
+		$this->db->delete('kategori');
 	}
 
 	function reset_password($id){
