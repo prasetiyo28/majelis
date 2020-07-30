@@ -79,13 +79,13 @@
 
 					<div class="form-group">
 						<label for="inputText3" class="col-form-label">Nama Majelis</label>
-						<input required="required" id="inputText3" name="nama" type="text" class="form-control" placeholder="Nama Majelis...">
+						<input required="required" id="inputText3" name="nama" pattern="[A-Za-z\s]{3,100}"  type="text" class="form-control" placeholder="Nama Majelis...">
 
 					</div>
 
 					<div class="form-group">
 						<label for="inputText3" class="col-form-label">Ketua Majelis</label>
-						<input required="required" id="inputText3" name="ketua" type="text" class="form-control" placeholder="Ketua Majelis...">
+						<input required="required" id="inputText3" pattern="[A-Za-z\s]{3,100}" name="ketua" type="text" class="form-control" placeholder="Ketua Majelis...">
 
 					</div>
 
