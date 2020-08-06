@@ -156,6 +156,18 @@ class MMajelis extends CI_Model{
 		return $query->result();
 	}
 
+	function get_laporan_infaq_majelis($params){
+		$this->db->select('sum(infaq.infaq) as total, majelis.nama_majelis,DATE_FORMAT(tanggal, "%M, %Y") as bulantahun');
+		$this->db->from('infaq');
+		$this->db->join('majelis','infaq.id_majelis = majelis.id_majelis');
+		$this->db->where('majelis.deleted','0');
+		$this->db->where('majelis.id_kategori',$params['id_kategori']);
+		$this->db->where('DATE_FORMAT(tanggal, "%Y-%m")=',$params['bulan']);
+		$this->db->group_by('majelis.id_majelis');
+		$query = $this->db->get();
+		return $query->result();
+	}
+
 	function get_majelis_by_id($id){
 		$this->db->select('majelis.*, kategori.kategori');
 		$this->db->from('majelis');
@@ -212,6 +224,12 @@ class MMajelis extends CI_Model{
 	function get_kategori_all(){
 		$query = $this->db->get('kategori');
 		return $query->result();
+	}
+
+	function get_kategori_by_id($id){
+		$this->db->where('id_kategori',$id);
+		$query = $this->db->get('kategori');
+		return $query->row();
 	}
 
 	function get_nu(){

@@ -17,6 +17,9 @@
 				<li>
 					<a href="<?php echo base_url() ?>admin/laporan"><i class="fa fa-book nav_icon"></i>Data Laporan</a>
 				</li>
+				<li>
+					<a href="<?php echo base_url() ?>admin/laporan_infaq"><i class="fa fa-book nav_icon"></i>Data Laporan Infaq</a>
+				</li>
 				
 			</ul>
 			<!-- //sidebar-collapse -->

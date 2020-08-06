@@ -262,6 +262,33 @@ if ($register) {
 
 	}
 
+	public function laporan_infaq()
+	{
+		$data2['kategori'] =$this->MMajelis->get_kategori();
+		$data['content'] = $this->load->view('pages/laporan_infaq',$data2,true);
+		$this->load->view('default',$data);
+
+	}
+
+	public function cetak_laporan_infaq()
+	{
+		$params['bulan'] = $_POST['bulan'];
+		$params['id_kategori'] = $_POST['kategori'];
+		$data2['infaq'] =$this->MMajelis->get_laporan_infaq_majelis($params);
+		$data2['kategori'] =$this->MMajelis->get_kategori_by_id($_POST['kategori'])->kategori;
+		// echo "laporan";
+		
+		if (count($data2['infaq']) > 0) {
+			$data2['bulan_tahun'] = $data2['infaq'][0]->bulantahun;
+		}else{
+			$data2['bulan_tahun'] =  $_POST['bulan'];
+		}
+
+		// echo json_encode($data2);
+
+		$this->load->view('pages/cetak_laporan_infaq',$data2);
+	}
+
 	public function send($id,$email){
 		$htmlContent = '<h1>Klik Link di bawah ini untuk memverifikasi akun anda</h1>';
 		$htmlContent .= '<a href='.base_url().'majelis/verifikasi/'.$id.'>Verifikasi</a>';
